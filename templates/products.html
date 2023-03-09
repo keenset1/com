@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+  <h1>Products</h1>
+  <ul>
+    {% for product in products %}
+      <li>
+        <a href="{{ url_for('product', id=product['id']) }}">
+          {{ product['name'] }} - {{ product['price'] }}$
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% if session['username'] %}
+    <form method="post" action="{{ url_for('add_to_cart', id=product['id']) }}">
+      <label>Quantity:</label>
+      <input type="number" name="quantity" value="1" min="1" max="10">
+      <input type="submit" value="Add to cart">
+    </form>
+  {% endif %}
+{% endblock %}
